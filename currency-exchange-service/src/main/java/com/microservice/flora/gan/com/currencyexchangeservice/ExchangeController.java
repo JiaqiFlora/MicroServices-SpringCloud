@@ -1,7 +1,10 @@
 package com.microservice.flora.gan.com.currencyexchangeservice;
 
 import java.math.BigDecimal;
+import java.security.KeyStore.PrivateKeyEntry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.repository.support.Repositories;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ExchangeController {
 	
+	private Logger logger = LoggerFactory.getLogger(ExchangeController.class);
+	
 	@Autowired
 	private CurrencyExchangeRepository currencyExchangeRepository;
 	
@@ -21,6 +26,8 @@ public class ExchangeController {
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	public CurrencyExchange retrieveExchangeValue(@PathVariable String from, @PathVariable String to) {
 //		CurrencyExchange currencyExchange = new CurrencyExchange(1000L, from, to, BigDecimal.valueOf(50));
+		
+		logger.info("retrieve exhcange value called from {} to {}", from, to);
 		
 		CurrencyExchange currencyExchange = currencyExchangeRepository.findByFromAndTo(from, to);
 		
